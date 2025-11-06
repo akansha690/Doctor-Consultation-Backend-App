@@ -2,10 +2,9 @@
 
 
 import express from 'express';
+import { serverConfig } from './configs/config';
 
 const app =  express();
-
-const PORT = 4000;
 
 app.use(express.json());
 
@@ -15,6 +14,6 @@ app.use('/' , (req, res)=>{
     })
 })
 
-app.listen(PORT, ()=>{
-    console.log(`Listening on port : ${PORT}`);
+app.listen(serverConfig.PORT, ()=>{
+    console.log(`Listening on port : ${serverConfig.PORT}`);
 })
