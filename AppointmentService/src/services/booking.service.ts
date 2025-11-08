@@ -29,10 +29,10 @@ export async function update(id: number, data: Partial<createBookingDTO>){
     return booking
 }
 
-export async function getBookingWithFilter(data: Partial<createBookingDTO>){
-    const booking = await bookingRepository.getWithFilter(data);
-    return booking
-}
+// export async function getBookingWithFilter(id: number, data: Partial<createBookingDTO>){
+//     const booking = await bookingRepository.getWithFilter(id , data);
+//     return booking
+// }
 
 
 

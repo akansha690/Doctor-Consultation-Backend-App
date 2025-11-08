@@ -12,11 +12,11 @@ export async function up (queryInterface: QueryInterface) {
           age INT,
           specialisation VARCHAR(255) NOT NULL,
           education TEXT NOT NULL,
-          consultation_fee VARCHAR(100) NOT NULL,
+          consultation_fee INT NOT NULL,
           experience INT NOT NULL,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,     
-          deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP     
+          deleted_at TIMESTAMP DEFAULT NULL     
         );   
       `
      );

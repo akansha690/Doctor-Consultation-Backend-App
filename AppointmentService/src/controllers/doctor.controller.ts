@@ -5,7 +5,15 @@ import { StatusCodes } from "http-status-codes";
 
 export async function createProfileHandler(req: Request, res: Response, next : NextFunction){
 
-    const profile = await createProfile(req.body)
+    const data = {
+      fullName: req.body.full_name,
+      age: req.body.age,
+      specialisation: req.body.specialisation,
+      education: req.body.education,
+      consultationFee: req.body.consultation_fee,
+      experience: req.body.experience
+    };
+    const profile = await createProfile(data)
     res.status(StatusCodes.OK).json({
         message: "Profile created successfully",
         data: profile,

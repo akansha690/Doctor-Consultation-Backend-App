@@ -25,8 +25,8 @@ export class AvailabilitySlotRepository extends BaseRepository<AvailabilitySlot>
             const slots = await this.model.findAll({
                 where:{
                     doctorId: id,
-                    day: data.day,
-                    date: data.date
+                    day: data.day || undefined,
+                    date: data.date ? new Date(data.date) : undefined
                 }
             })
             return slots

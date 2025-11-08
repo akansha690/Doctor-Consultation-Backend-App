@@ -5,6 +5,6 @@ export type createBookingDTO={
     patientId : number,
     doctorId: number,
     availabilityId: number,
-    price : string,
-    status: statusEnum
+    price : number,
+    status?: statusEnum
 }

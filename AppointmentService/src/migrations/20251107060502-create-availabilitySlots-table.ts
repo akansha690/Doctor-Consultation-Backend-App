@@ -15,7 +15,7 @@ export async function up (queryInterface: QueryInterface) {
           is_available BOOLEAN NOT NULL DEFAULT TRUE,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+          deleted_at TIMESTAMP DEFAULT NULL, 
           FOREIGN KEY(doctor_id) REFERENCES doctorProfiles(id) ON DELETE CASCADE ON UPDATE CASCADE   
         );   
       `

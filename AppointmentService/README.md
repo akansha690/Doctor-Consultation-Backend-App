@@ -29,19 +29,7 @@ echo PORT=4000 >> .env
 ```
 npm run dev
 ```
-
-
-DoctorProfiles — store details like name, specialization, age, and education
-
-AvailabilitySlots — manage each doctor’s available days and times
-
-Bookings — patients can book slots with doctors
-
-Filtering System — filter doctors by specialization or availability
-
-Soft Deletion — logical deletion of records using deletedAt
-
-Repository Pattern — for clean and reusable database logic
+It is a microservice based Project. 
 
 ```
 ## Flow of a request
@@ -76,4 +64,24 @@ It acts as a bridge between the Controller and the Repository.
 The Repository layer is responsible for database operations.
 It interacts directly with Sequelize models to perform findAll, findByPk, create, update, delete, etc.
 
-#
+
+# 1. Appointment Service:
+
+DoctorProfiles — store details like name, specialization, age, and education
+
+AvailabilitySlots — manage each doctor’s available days and times
+
+Bookings — patients can book slots with doctors
+
+Filtering System — filter doctors by specialization or availability
+
+Soft Deletion — logical deletion of records using deletedAt
+
+Repository Pattern — for clean and reusable database logic
+
+
+# Postman Documentation of Appointment service
+
+https://documenter.getpostman.com/view/36220149/2sB3WsQKwU
+
+

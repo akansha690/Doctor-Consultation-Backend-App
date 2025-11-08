@@ -5,7 +5,13 @@ import { createSlot, getAllWithFilter, getById, softDelete, update } from "../se
 
 export async function createSlotHandler(req: Request, res: Response, next : NextFunction){
 
-    const slot = await createSlot(req.body)
+    const data = {
+        doctorId : req.body.doctorId,
+        day:req.body.day,
+        date: req.body.date,
+        isAvailable: req.body.isAvailable
+    }
+    const slot = await createSlot(data)
     res.status(StatusCodes.OK).json({
         message: "Slot created successfully",
         data: slot,
@@ -18,11 +24,19 @@ export async function getAllFilteredSlotsHandler(req: Request, res: Response, ne
 
     const id = Number(req.params.id)
     const slots = await getAllWithFilter(id, req.body)
-    res.status(StatusCodes.OK).json({
-        message: "All Slots fetched successfully",
-        data: slots,
-        success: true
-    })
+    if(slots.length === 0){
+        res.status(StatusCodes.OK).json({
+            message: "No Slots found",
+            data: slots,
+            success: true
+        })
+    }
+    else 
+        res.status(StatusCodes.OK).json({
+            message: "All Slots fetched successfully",
+            data: slots,
+            success: true
+        })
     
 }
 

@@ -10,30 +10,30 @@ export class BookingRepository extends BaseRepository<Booking>{
     }
     async softDelete(id:number){
         try {
-            const doctor = await this.model.findByPk(id);
-            if(!doctor){
+            const booking = await this.model.findByPk(id);
+            if(!booking){
                 throw new Error("This hotel is not found for deletion");
             }
-            doctor.deletedAt = new Date();
-            await doctor.save();
+            booking.deletedAt = new Date();
+            await booking.save();
         } catch (error) {
             throw error;
         }
     }
 
-    async getWithFilter( data: Partial<Booking>){
-        try {
-            const booking = await this.model.findAll({
-                where:{
-                    doctorId: data.doctorId,
-                    patientId: data.patientId
-                }
-            })
-            return booking;
-        } catch (error) {
-            throw error;
-        }
-    }
+    // async getWithFilter(id: number, data: Partial<Booking>){
+    //     try {
+    //         const booking = await this.model.findAll({
+    //             where:{
+    //                 doctorId: id,
+    //                 patientId: data.patientId ? data.patientId : undefined,
+    //             }
+    //         })
+    //         return booking;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
     
 }
 

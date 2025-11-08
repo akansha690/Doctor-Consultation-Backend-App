@@ -5,7 +5,7 @@ export type createProfileDTO = {
     specialisation: string,
     education: string,
     experience: number,
-    consultationFee: string
+    consultationFee: number
 
 }
 

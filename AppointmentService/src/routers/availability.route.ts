@@ -6,7 +6,7 @@ const slotRouter = express.Router();
 
 slotRouter.post('/', createSlotHandler )
 slotRouter.get('/:id', getSlotHandler )
-slotRouter.get('/slots/:id', getAllFilteredSlotsHandler )
+slotRouter.get('/filter/:id', getAllFilteredSlotsHandler )
 slotRouter.patch('/update/:id', updateHandler )
 slotRouter.delete('/delete/:id', softDeleteHandler )
 

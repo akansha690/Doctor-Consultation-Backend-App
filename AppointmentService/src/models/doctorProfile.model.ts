@@ -8,7 +8,7 @@ export class DoctorProfile extends Model<InferAttributes<DoctorProfile>, InferCr
     declare age: number
     declare specialisation: string
     declare education: string
-    declare consultationFee: string
+    declare consultationFee: number
     declare experience: number
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
@@ -39,7 +39,7 @@ DoctorProfile.init(
             allowNull:false
         },
         consultationFee:{
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull:false
         },
         experience:{

@@ -14,8 +14,8 @@ export class Booking extends Model<InferAttributes<Booking>, InferCreationAttrib
     declare patientId: number
     declare doctorId: number
     declare availabilityId: number
-    declare price: string
-    declare status: statusEnum
+    declare price: number
+    declare status?: statusEnum
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
     declare deletedAt: CreationOptional<Date>
@@ -44,11 +44,12 @@ Booking.init(
             allowNull:false
         },
         price:{
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull:false
         },
         status:{
-            type:DataTypes.ENUM,
+            type: DataTypes.ENUM(...Object.values(statusEnum)),
+            defaultValue: statusEnum.PENDING
         },
         createdAt:{
             type:DataTypes.DATE
