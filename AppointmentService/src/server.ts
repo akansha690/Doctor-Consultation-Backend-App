@@ -1,18 +1,13 @@
 
-
-
 import express from 'express';
-import { serverConfig } from './configs/config';
+import { serverConfig } from './config/server.config';
+import v1Router from './routers';
 
 const app =  express();
 
 app.use(express.json());
 
-app.use('/' , (req, res)=>{
-    return res.status(200).json({
-        message: "Success"
-    })
-})
+app.use('/api/v1' , v1Router)
 
 app.listen(serverConfig.PORT, ()=>{
     console.log(`Listening on port : ${serverConfig.PORT}`);
