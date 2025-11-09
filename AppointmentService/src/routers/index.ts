@@ -11,5 +11,6 @@ v1Router.use('/slot', slotRouter)
 v1Router.use('/booking', bookingRouter)
 
 
+
 export default v1Router;
 

@@ -23,7 +23,7 @@ export async function createProfileHandler(req: Request, res: Response, next : N
 }
 
 export async function getAllProfileHandler(req: Request, res: Response, next : NextFunction){
-
+    console.log("getting all.......")
     const profiles = await getAll()
     res.status(StatusCodes.OK).json({
         message: "All Profiles fetched successfully",

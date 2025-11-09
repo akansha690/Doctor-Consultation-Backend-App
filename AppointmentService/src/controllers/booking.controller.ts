@@ -5,9 +5,10 @@ import { createBooking, getById, softDelete, update } from "../services/booking.
 
 export async function createBookingHandler(req: Request, res: Response, next : NextFunction){
 
+    const {patientId} = req.body;
     const data = {
         doctorId: req.body.doctorId,
-        patientId: req.body.patientId,
+        patientId: patientId,
         availabilityId : req.body.availabilityId,
         price:req.body.price
     }
