@@ -5,12 +5,12 @@ import { createBooking, getById, softDelete, update } from "../services/booking.
 
 export async function createBookingHandler(req: Request, res: Response, next : NextFunction){
 
-    const patientId = req.headers['x-user-id'] || req.body.patientId;
-    console.log(patientId);
+    // const patientId = req.headers['x-user-id'];
+    // console.log(patientId);
     
     const data = {
         doctorId: req.body.doctorId,
-        patientId: patientId,
+        patientId: req.headers['x-user-id'],
         availabilityId : req.body.availabilityId,
         price:req.body.price
     }

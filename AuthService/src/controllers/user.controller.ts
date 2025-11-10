@@ -22,11 +22,11 @@ export async function loginUserHandler(req: Request, res: Response, next : NextF
     const data = {
         ...req.body
     }
-    const userToken = await loginUser(data)
-    res.setHeader('Authorization', userToken);
+    const {token} = await loginUser(data)
+    res.setHeader('Authorization', token);
     res.status(StatusCodes.OK).json({
         message: "User logged in successfully",
-        data: userToken,
+        data: token,
         success: true
     })
     

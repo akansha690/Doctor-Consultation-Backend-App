@@ -2,7 +2,7 @@
 import { statusEnum } from "../models/booking.model"
 
 export type createBookingDTO={
-    patientId : number,
+    // patientId : number,
     doctorId: number,
     availabilityId: number,
     price : number,

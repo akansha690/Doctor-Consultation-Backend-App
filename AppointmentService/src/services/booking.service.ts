@@ -5,7 +5,7 @@ import { BookingRepository } from "../repositories/booking.repo";
 const bookingRepository = new BookingRepository();
 
 export async function createBooking(data: createBookingDTO){
-    const booking = await bookingRepository.create(data); 
+    const booking = await bookingRepository.createBooking(data); 
     return booking;
 }
 

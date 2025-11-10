@@ -11,7 +11,7 @@ export enum statusEnum {
 export class Booking extends Model<InferAttributes<Booking>, InferCreationAttributes<Booking>> {
 
     declare id : CreationOptional<number>
-    declare patientId: number
+    declare patientId?: number
     declare doctorId: number
     declare availabilityId: number
     declare price: number

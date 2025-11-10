@@ -80,7 +80,7 @@ Soft Deletion — logical deletion of records using deletedAt
 Repository Pattern — for clean and reusable database logic
 
 
-# Postman Documentation of Appointment service
+# Postman Documentation
 
 https://documenter.getpostman.com/view/36220149/2sB3WsQKwU
 

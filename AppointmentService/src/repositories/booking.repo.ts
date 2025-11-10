@@ -1,7 +1,9 @@
 
 
+import { AvailabilitySlot } from '../models/availabilitySlots.model';
 import { Booking } from '../models/booking.model';
 import BaseRepository from './index'
+import { createBookingDTO } from '../dto/booking.dto';
 
 
 export class BookingRepository extends BaseRepository<Booking>{
@@ -21,6 +23,23 @@ export class BookingRepository extends BaseRepository<Booking>{
         }
     }
 
+     async createBooking(data: createBookingDTO) : Promise<Booking>{
+            try {
+                const slot = await AvailabilitySlot.findByPk(data.availabilityId);
+                if(!slot){
+                    throw new Error("slot of availablityId not found")
+                }
+                if (!slot.isAvailable) {
+                    throw new Error("Slot is not available");
+                }
+                const record = await this.model.create(data);
+                slot.isAvailable = false;
+                await slot.save();
+                return record;
+            } catch (error) {
+                throw error;
+            }
+        }
     // async getWithFilter(id: number, data: Partial<Booking>){
     //     try {
     //         const booking = await this.model.findAll({

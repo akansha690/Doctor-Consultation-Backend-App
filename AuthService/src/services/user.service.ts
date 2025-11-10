@@ -1,13 +1,18 @@
 
 import { createUserDTO, loginUserDTO } from "../dto/user.dto";
 import { UserRepository } from "../repositories/user.repo";
+import { comparePassword, hashPassword } from "../utils/hash";
 import { generateToken } from "../utils/jwt.util";
 
 
 const userRepository = new UserRepository();
 
 export async function registerUser(data: createUserDTO){
-    const user = await userRepository.create(data); 
+    const hashedPass = await hashPassword(data.password)
+    const user = await userRepository.create({
+        ...data,
+        password: hashedPass
+    }); 
     return user;
 }
 
@@ -17,9 +22,7 @@ export async function loginUser(data: loginUserDTO){
     if(!user){
         throw new Error("Please Register");
     }
-    if(user.password !== data.password ){
-        throw new Error("Incorrect Password");
-    }
+    const isMatch = await comparePassword(data.password, user.password);
 
     const payload = {
         id: user.id,
@@ -32,6 +35,6 @@ export async function loginUser(data: loginUserDTO){
     if(!token){
         throw new Error("Error generating Token");
     }
-    return token;
+    return {isMatch, token};
     
 }
