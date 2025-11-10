@@ -1,6 +1,6 @@
 
 export type createProfileDTO = {
-    fullName: string,
+    // fullName: string,
     age : number,
     specialisation: string,
     education: string,

@@ -10,6 +10,7 @@ abstract class BaseRepository<T extends Model>{
     async create(data: CreationAttributes<T>) : Promise<T>{
         try {
             const record = await this.model.create(data);
+            record;
             return record;
         } catch (error) {
             throw error;

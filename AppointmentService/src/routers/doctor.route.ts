@@ -7,7 +7,7 @@ const doctorRouter = express.Router();
 doctorRouter.post('/', createProfileHandler )
 doctorRouter.get('/', getAllProfileHandler )
 doctorRouter.get('/:id', getProfileHandler )
-doctorRouter.get('/', getProfilesWithFilterHandler )
+doctorRouter.get('/filter/:specialisation', getProfilesWithFilterHandler )
 doctorRouter.patch('/update/:id', updateHandler )
 doctorRouter.delete('/delete/:id', softDeleteHandler )
 

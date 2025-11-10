@@ -5,8 +5,9 @@ import { StatusCodes } from "http-status-codes";
 
 export async function createProfileHandler(req: Request, res: Response, next : NextFunction){
 
+    // console.log(req.headers['x-user-username']);
     const data = {
-      fullName: req.body.full_name,
+      fullName: req.headers['x-user-username'],
       age: req.body.age,
       specialisation: req.body.specialisation,
       education: req.body.education,
@@ -23,7 +24,7 @@ export async function createProfileHandler(req: Request, res: Response, next : N
 }
 
 export async function getAllProfileHandler(req: Request, res: Response, next : NextFunction){
-    console.log("getting all.......")
+
     const profiles = await getAll()
     res.status(StatusCodes.OK).json({
         message: "All Profiles fetched successfully",
@@ -47,10 +48,16 @@ export async function getProfileHandler(req: Request, res: Response, next : Next
 
 export async function getProfilesWithFilterHandler(req: Request, res: Response, next : NextFunction){
 
-    const data = req.body
+    const {specialisation} = req.params 
+    console.log(specialisation);
+    
+    const data = String(specialisation)
+
+    console.log(data);
+    
     const profiles = await getWithFilterProfile(data)
     res.status(StatusCodes.OK).json({
-        message: `All Profiles with specialisation ${data} found successfully`,
+        message: `All Profiles with specialisation ${specialisation} found successfully`,
         data: profiles,
         success: true
     })

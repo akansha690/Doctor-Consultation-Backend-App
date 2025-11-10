@@ -4,7 +4,7 @@ import {sequelize} from '../models/sequelize'
 export class DoctorProfile extends Model<InferAttributes<DoctorProfile>, InferCreationAttributes<DoctorProfile>> {
 
     declare id : CreationOptional<number>
-    declare fullName: string
+    declare fullName?: string
     declare age: number
     declare specialisation: string
     declare education: string
