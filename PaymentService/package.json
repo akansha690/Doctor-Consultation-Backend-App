@@ -1,5 +1,5 @@
 {
-  "name": "doctor-consultation-backend-app",
+  "name": "paymentservice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^1.13.2",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "http-status-codes": "^2.3.0",
-    "mysql2": "^3.15.3",
-    "sequelize": "^6.37.7"
-  },
   "devDependencies": {
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
@@ -25,5 +17,15 @@
     "sequelize-cli": "^6.6.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "http-status-codes": "^2.3.0",
+    "mysql2": "^3.15.3",
+    "razorpay": "^2.9.6",
+    "sequelize": "^6.37.7"
   }
 }

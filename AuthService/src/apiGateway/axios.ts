@@ -18,7 +18,7 @@ export async function HTTPAxiosRequest(req:Request , res:Response){
         let targetUrl = "";
     
         if(req.url.includes('/booking') || req.url.includes('/slot') || req.url.includes('/doctor')){
-            targetUrl = `http://localhost:4000/api/v1${suffixUrl}`;
+            targetUrl = `${process.env.API_GATEWAY_URL}${suffixUrl}`;
         }
         console.log(`Fowarding request to ${targetUrl}`);
         const response = await axios({
