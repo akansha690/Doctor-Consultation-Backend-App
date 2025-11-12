@@ -2,6 +2,7 @@
 
 import BaseRepository from './index'
 import { AvailabilitySlot } from '../models/availabilitySlots.model';
+import { InternalServerError } from '../utils/error/error';
 
 
 export class AvailabilitySlotRepository extends BaseRepository<AvailabilitySlot>{
@@ -17,7 +18,7 @@ export class AvailabilitySlotRepository extends BaseRepository<AvailabilitySlot>
             slot.deletedAt = new Date();
             await slot.save();
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
     async getAllWithFilter(id: number, data: Partial<AvailabilitySlot>){
@@ -31,7 +32,7 @@ export class AvailabilitySlotRepository extends BaseRepository<AvailabilitySlot>
             })
             return slots
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
 }

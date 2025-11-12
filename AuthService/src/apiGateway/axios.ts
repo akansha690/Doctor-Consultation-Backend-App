@@ -20,6 +20,9 @@ export async function HTTPAxiosRequest(req:Request , res:Response){
         if(req.url.includes('/booking') || req.url.includes('/slot') || req.url.includes('/doctor')){
             targetUrl = `${process.env.API_GATEWAY_URL}${suffixUrl}`;
         }
+        if(req.url.includes('/payment')){
+            targetUrl = `${process.env.PAYMENT_SERVICE_URL}${suffixUrl}`;
+        }
         console.log(`Fowarding request to ${targetUrl}`);
         const response = await axios({
             method: req.method,

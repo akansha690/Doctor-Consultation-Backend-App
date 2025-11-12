@@ -1,4 +1,5 @@
 import { CreationAttributes, Model, ModelStatic, WhereOptions } from "sequelize";
+import { BadRequestError, InternalServerError } from "../utils/error/error";
 
 abstract class BaseRepository<T extends Model>{
 
@@ -12,7 +13,7 @@ abstract class BaseRepository<T extends Model>{
             const record = await this.model.create(data);
             return record;
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
     async findById(id:number): Promise<T | null>{
@@ -23,7 +24,7 @@ abstract class BaseRepository<T extends Model>{
             }
             return record; 
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
     
@@ -35,7 +36,7 @@ abstract class BaseRepository<T extends Model>{
             }
             return records; 
         } catch (error) {
-            throw error;
+           throw new InternalServerError("Something went wrong")
         }
     }
     async delete(whereData: WhereOptions<T>): Promise<void>{
@@ -46,11 +47,11 @@ abstract class BaseRepository<T extends Model>{
                 }
             });
             if(!record){
-                throw new Error("No record found to delete")
+                throw new BadRequestError("No record found to delete")
             }
             return; 
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
     async update(id: number, data: Partial<T>):Promise<T | null>{
@@ -63,7 +64,8 @@ abstract class BaseRepository<T extends Model>{
             await record.save();
             return record;
         } catch (error) {
-            throw error;
+            
+            throw new InternalServerError("Something went wrong")
         }
     }
 }

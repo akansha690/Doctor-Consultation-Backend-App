@@ -5,7 +5,7 @@ import { webhookHandler } from "../controllers/webhook.controller";
 
 const paymentRouter = express.Router();
 
-paymentRouter.post('/' , createOrderHandler)
+paymentRouter.post('/:bookingId' , createOrderHandler)
 paymentRouter.post('/webhook' , webhookHandler)
 
 export default paymentRouter;

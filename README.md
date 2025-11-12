@@ -98,6 +98,245 @@ Client (Frontend / Postman)
    This service is production-ready and can handle payments once connected to a frontend checkout UI.
 
 
+ # Complete Flow from register to booking a session with payment:
+
+
+  ## User Registration
+
+  **Endpoint** : POST http://localhost:PORT/api/v1/user/
+    
+   **Request Body:** 
+   ```
+
+   {
+    "username":"Sakshi",
+    "email": "sakshi56@gmail.com",
+    "password":"mysecret123",
+    "role":"PATIENT"
+   }
+   ```
+
+   **Response Body:**
+```
+
+   {
+    "message": "User registered successfully",
+    "data": {
+        "id": 9,
+        "username": "Sakshi",
+        "email": "sakshi56@gmail.com",
+        "password": "$2b$10$oAb7XNjnTLl5wvJnHWOpBOsG1wtWbrZMx/MiGEXVGoSkjEAm2dHVe",
+        "role": "PATIENT",
+        "updatedAt": "2025-11-12T06:44:36.799Z",
+        "createdAt": "2025-11-12T06:44:36.799Z"
+    },
+    "success": true
+   }
+
+```
+
+ 
+## User Login
+
+**Endpoint**  : GET http://localhost:PORT/api/v1/user/login
+
+**Request Body:** 
+
+```
+
+{
+   "email": "sakshi56@gmail.com",
+    "password":"mysecret123"
+}
+
+```
+
+
+**Response Body:** 
+```
+
+{
+    "message": "User logged in successfully",
+    "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA",
+    "success": true
+}
+
+
+```
+Here, data is token gneerated by JWT token.
+
+
+## Find a specific Doctor By Id
+
+**Endpoint**  : GET /doctor/:doctorId
+
+**Authorizartion(Header)** :
+ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+This doctor will booked only if the 
+
+**Response Body:** 
+
+```
+ None
+```
+
+
+**Response Body:** 
+
+```
+{
+    "data": {
+        "message": " Profile found successfully",
+        "data": {
+            "id": 1,
+            "fullName": "Dr. Arjun Mehta",
+            "age": 42,
+            "specialisation": "Cardiologist",
+            "education": "MD in Cardiology, AIIMS Delhi",
+            "consultationFee": 1200,
+            "experience": 15,
+            "createdAt": "2025-11-08T11:49:31.000Z",
+            "updatedAt": "2025-11-08T11:49:31.000Z",
+            "deletedAt": null
+        },
+        "success": true
+    },
+    "success": true
+}
+
+```
+
+
+## Find availability slot of a specific doctor you want to book
+
+**Endpoint**  : GET /doctor/:doctorId
+
+**Authorizartion(Header)** :
+ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+**Request Body:**
+
+```
+{
+    "day": "Wednesday",
+    "date": "2025-11-20"
+}
+
+
+```
+
+
+**Response Body:** 
+
+```
+{
+    "data": {
+        "message": "All Slots fetched successfully",
+        "data": [
+            {
+                "id": 5,
+                "doctorId": 1,
+                "day": "Wednesday",
+                "date": "2025-11-20T00:00:00.000Z",
+                "isAvailable": true,
+                "createdAt": "2025-11-12T08:01:13.000Z",
+                "updatedAt": "2025-11-12T08:01:13.000Z",
+                "deletedAt": null
+            }
+        ],
+        "success": true
+    },
+    "success": true
+}
+
+```
+
+
+
+## Booking a session with doctor
+
+**Endpoint**  : POST /booking/
+
+**Authorizartion(Header)** :
+ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+**Request Body:**
+
+```
+{
+    "doctorId": 1,
+    "price":1200,
+    "availabilityId" : 5
+}
+
+```
+
+
+**Response Body:** 
+```
+{
+    "data": {
+        "message": "Booking created successfully",
+        "data": {
+            "status": "PENDING",
+            "id": 9,
+            "doctorId": 1,
+            "patientId": "9",
+            "availabilityId": 5,
+            "price": 1200,
+            "updatedAt": "2025-11-12T08:05:03.912Z",
+            "createdAt": "2025-11-12T08:05:03.912Z"
+        },
+        "success": true
+    },
+    "success": true
+}
+
+```
+
+## Payment for final Booking
+
+**Endpoint**  : GET /payment/:bookingId
+
+**Authorizartion(Header)** :
+ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+**Request Body:**
+
+```
+None
+```
+
+
+**Response Body:** 
+```
+
+{
+    "data": {
+        "success": true,
+        "data": {
+            "amount": 120000,
+            "amount_due": 120000,
+            "amount_paid": 0,
+            "attempts": 0,
+            "created_at": 1762934896,
+            "currency": "INR",
+            "entity": "order",
+            "id": "order_Rel0hMf1aQa3cb",
+            "notes": [],
+            "offer_id": null,
+            "receipt": "booking_9",
+            "status": "created"
+        }
+    },
+    "success": true
+}
+
+```
+
+
+
 # Postman Documentation
 
 https://documenter.getpostman.com/view/36220149/2sB3WsQKwU

@@ -4,6 +4,7 @@ import { AvailabilitySlot } from '../models/availabilitySlots.model';
 import { Booking } from '../models/booking.model';
 import BaseRepository from './index'
 import { createBookingDTO } from '../dto/booking.dto';
+import { BadRequestError, InternalServerError } from '../utils/error/error';
 
 
 export class BookingRepository extends BaseRepository<Booking>{
@@ -19,7 +20,7 @@ export class BookingRepository extends BaseRepository<Booking>{
             booking.deletedAt = new Date();
             await booking.save();
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
 
@@ -30,14 +31,14 @@ export class BookingRepository extends BaseRepository<Booking>{
                     throw new Error("slot of availablityId not found")
                 }
                 if (!slot.isAvailable) {
-                    throw new Error("Slot is not available");
+                    throw new BadRequestError("Slot is not available");
                 }
                 const record = await this.model.create(data);
                 slot.isAvailable = false;
                 await slot.save();
                 return record;
             } catch (error) {
-                throw error;
+                throw new InternalServerError(error as string)
             }
         }
     // async getWithFilter(id: number, data: Partial<Booking>){

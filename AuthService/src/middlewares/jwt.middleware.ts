@@ -14,15 +14,10 @@ export function JWTMiddleware(req:Request, res:Response, next: NextFunction) {
 
   try {
     const decoded = jwt.verify(token, JWT_TOKEN);
-    // (req as any).user = {
-    //   id: (decoded as any).id,
-    //   role: (decoded as any).role,
-    //   username: (decoded as any).username
-    // };
+
     req.headers["x-user-id"] = (decoded as any).id;
     req.headers["x-user-role"] = (decoded as any).role;
     req.headers["x-user-username"] = (decoded as any).username;
-    // console.log("User has been authenticated", (req as any).user.username);
     
     next();
   } catch (err) {

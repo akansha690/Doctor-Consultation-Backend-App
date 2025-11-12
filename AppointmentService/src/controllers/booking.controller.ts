@@ -28,6 +28,7 @@ export async function getBookingHandler(req: Request, res: Response, next : Next
 
     const id = Number(req.params.id)
     const booking = await getById(id)
+    
     res.status(StatusCodes.OK).json({
         message: " Booking found successfully",
         data: booking,

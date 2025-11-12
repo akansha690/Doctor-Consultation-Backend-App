@@ -1,5 +1,6 @@
 import BaseRepository from ".";
 import User from "../models/user"
+import { InternalServerError } from "../utils/error/error";
 
 export class UserRepository extends BaseRepository<User>{
     constructor(){
@@ -17,7 +18,7 @@ export class UserRepository extends BaseRepository<User>{
                 }
                 return record; 
             } catch (error) {
-                throw error;
+                throw new InternalServerError("Something went wrong")
             }
         }
 }

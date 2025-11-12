@@ -2,6 +2,7 @@
 
 import BaseRepository from './index'
 import { DoctorProfile } from '../models/doctorProfile.model'
+import { InternalServerError } from '../utils/error/error';
 
 
 export class DoctorRepository extends BaseRepository<DoctorProfile>{
@@ -17,7 +18,7 @@ export class DoctorRepository extends BaseRepository<DoctorProfile>{
             doctor.deletedAt = new Date();
             await doctor.save();
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     }
 
@@ -30,7 +31,7 @@ export class DoctorRepository extends BaseRepository<DoctorProfile>{
             })
             return profiles;
         } catch (error) {
-            throw error;
+            throw new InternalServerError("Something went wrong")
         }
     } 
 }
