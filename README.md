@@ -67,13 +67,159 @@ Client (Frontend / Postman)
 
 
 # 1. Auth service 
-   Handles user authentication, JWT token generation logic.
-   API Gateway: Acts as the single entry point for all requests, routing them to appropriate microservices and ensuring secure communication between services.
+   The Auth Service is a critical microservice in the Doctor Consultation Backend App responsible.
+   1. Handles *user authentication*, JWT token generation logic.
+   2. *API Gateway*: Acts as the single entry point for all requests, routing them to appropriate microservices and ensuring secure communication between services.
+
+   **Key Responsibilities**
+
+    1. User registration.
+    2. Secure password hashing with bcrypt (salt rounds: 10)
+    3. JWT token generation with configurable expiration.
+    4. User authentication.(Login with email/password validation).
+    5. Protected routes with Bearer token authentication.
+    6. Error handling and validation
+
+    Client (Frontend/Postman)
+        ↓
+    Controller
+        ↓
+    Service Layer
+        ↓
+    Repository Layer
+        ↓
+    Database (Sequelize ORM)
+
+    ### Configure Environment Variables
+        Add this in your .env file in the root directory
+
+        ```
+            PORT=4000
+            DB_HOST=localhost
+            DB_USER=root
+            DB_PASSWORD=your_password
+            DB_NAME=doctor_consultation_db
+            JWT_SECRET=your_super_secret_jwt_key_here
+            JWT_EXPIRY=24h
+        ```
+
+    ### Create database
+    ```
+        mysql -u root -p
+        CREATE DATABASE doctor_consultation_db;
+    ```
+
+    ### Start the server
+
+    ```
+        npm run dev
+
+    ```
+
+    ##  API Endpoints
+
+    1. User Registration
+        Endpoint: POST /api/v1/user/
+        Description: Register a new user with specified role
+
+        ```
+            {
+            "username": "Sakshi",
+            "email": "sakshi56@gmail.com",
+            "password": "mysecret123",
+            "role": "PATIENT"
+            }
+
+        ```
+
+    Response body 
+
+
+```
+    {
+        "message": "User registered successfully",
+        "data": {
+            "id": 9,
+            "username": "Sakshi",
+            "email": "sakshi56@gmail.com",
+            "password": "$2b$10$oAb7XNjnTLl5wvJnHWOpBOsG1wtWbrZMx/MiGEXVGoSkjEAm2dHVe",
+            "role": "PATIENT",
+            "updatedAt": "2025-11-12T06:44:36.799Z",
+            "createdAt": "2025-11-12T06:44:36.799Z"
+        },
+        "success": true
+    }
+
+```
+
+  2. User Login
+        Endpoint: POST /api/v1/user/login
+        Description: Authenticate user and generate JWT token
+
+        ```
+
+            {
+            "email": "sakshi56@gmail.com",
+            "password": "mysecret123"
+            }
+
+
+        ```
+
+    Response 
+
+    ```
+
+        {
+            "message": "User logged in successfully",
+            "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA",
+            "success": true
+        }
+
+    ```
+
+    ## ApiGateway 
+
+    The API Gateway(axios.ts file) serves as the single entry point for all client requests in the Doctor Consultation Backend microservices architecture. It handles request routing, forwarding, and provides a unified interface for multiple backend services.
+
+
+    ## Add in .env file 
+    **Microservice URLs(To forward requests to different services)**
+        API_GATEWAY_URL=http://localhost:4000/api/v1
+        PAYMENT_SERVICE_URL=http://localhost:4050/api/v1
+        AUTH_SERVICE_URL=http://localhost:8080/api/v1
+
+    **Purpose**
+
+    1. Analyzes incoming request URL to determine target service.
+    2. Modifies headers by removing host-specific headers.
+    3. Forwards request to appropriate microservice.
+    4. Returns response back to client/postman.
+
+    ### All APIEndpoints of Auth service
+
+    1. POST http://localhost:AUTH_SERVICE_PORT/api/v1/user/  ----->To Register a user
+    2. POST http://localhost:AUTH_SERVICE_PORT/api/v1/user/login/  -----> To login a user
+
+    For below endpoints, client need to provide token received in headers like this
+    
+    **Authorizartion(Header)** :
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+    *This header provides all the info passed about the user ---> (x-user-id, x-user-role, x-user-username)*
+    Gateway verifies tokens and adds custom headers that services can use it.
+   
+
+    3. POST http://localhost:AUTH_SERVICE_PORT/doctor/ ----->  Requests including '/doctor' -----> forwards to Appointment service  
+    4. POST http://localhost:AUTH_SERVICE_PORT/slot/ ----->  Requests including '/slot' -----> forwards to Appointment service 
+    5. POST http://localhost:AUTH_SERVICE_PORT/booking/ ----->  Requests including '/booking' -----> forwards to Appointment service 
+    6. POST http://localhost:AUTH_SERVICE_PORT/payment/ ----->  Requests including '/booking' -----> forwards to Payment service. 
+
+
 
 # 2. Appointment Service:
 
    DoctorProfiles — store details like name, specialization, age, and education.
-
    AvailabilitySlots — manage each doctor’s available days and times.
 
    Bookings — patients can book slots with doctors.
@@ -84,6 +230,134 @@ Client (Frontend / Postman)
 
    Repository Pattern — for clean and reusable database logic.
 
+   ### All APIEndpoints of  Appointment Service:
+    
+
+   *Header is needed in all APIs* 
+   **Authorizartion(Header)** :
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+### /doctor endpoints:
+
+    1. POST url_of_auth_service/doctor/
+        To create a profile of Doctor.
+
+    Request Body
+
+    ```
+        {
+            "age": 39,
+            "specialisation": "General Physician",
+            "education": "MBBS, MD in General Medicine, Grand Medical College Delhi",
+            "consultation_fee": "800",
+            "experience": 5
+        }
+
+    ```
+
+    2. GET url_of_auth_service/doctor/   
+       To list all doctors 
+
+    3. GET url_of_auth_service/doctor/<doctorId>
+        To get a specific doctorProfile
+       
+    4. DELETE url_of_auth_service/doctor/delete/<doctorId>
+        To delete the doctor's profile
+
+    5. PATCH url_of_auth_service/doctor/update/<doctorId>
+        To update the given field in request body.
+        ```
+            {
+                "age":47,
+                "fullName":"Dr. Rohan Kumar"
+            }
+        ```    
+
+
+### /slot endpoints:
+
+    *Header is needed in all APIs* 
+   **Authorizartion(Header)** :
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+
+    1. POST url_of_auth_service/slot/
+        To create a slot.
+
+    Request Body
+
+    ```
+        {
+            "doctorId" : 1,
+            "day": "Wednesday",
+            "date": "2025-11-20",
+            "isAvailable": true
+        }
+
+    ```
+
+    2. GET url_of_auth_service/slot/<slotId>   
+       To get a slot of id slotId. 
+
+    3. DELETE url_of_auth_service/slot/delete/<slotId>
+        To delete a slot with given slotId.
+
+    4. PATCH url_of_auth_service/slot/update/<slotId>
+        To update a slot with given fields in request body.
+        ```
+            {
+                "day":"Friday"
+            }
+        ```    
+    5. GET url_of_auth_service/slot/filter/<doctorId>
+       To get all the slots of a doctor of id doctorId on a given day and date.
+
+
+    ```
+        {
+            "day": "Wednesday",
+            "date": "2025-11-20"
+        }
+
+    ```
+
+
+### /booking endpoints:
+
+    *Header is needed in all APIs* 
+   **Authorizartion(Header)** :
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+
+    1. POST url_of_auth_service/booking/
+        To create a booking, Booking can only be made when the slot you want is available. For now, PENDING booking is created. Once payment is done, the status of booking is changed to BOOKED.
+
+    Request Body
+
+    ```
+        {
+            "doctorId": 1,
+            "price":1200,
+            "availabilityId" : 5
+        }
+
+    ```
+
+    2. GET url_of_auth_service/booking/<bookingId>   
+       To get a booking of id bookingId. 
+
+    3. DELETE url_of_auth_service/booking/delete/<bookingId>
+        To delete a booking with given bookingId.
+
+    4. PATCH url_of_auth_service/booking/update/<bookingId>
+        To update a booking with given fields in request body.
+        ```
+            {
+                "status":"CANCELLED"
+            }
+        ```    
+    
+
 
 # 3. Payment service 
 
@@ -92,11 +366,35 @@ Client (Frontend / Postman)
    1. Order creation and management.
    2. Webhook implementation for real-time payment notifications.
    3. Payment signature verification for security.
-   4. Error handling and logging.
+   4. Error handling.
 
    For complete end-to-end testing, I would need a frontend checkout interface, but since this was a backend-focused project, I tested the order creation only.
    This service is production-ready and can handle payments once connected to a frontend checkout UI.
 
+
+   
+    ### All APIEndpoints of Payment Service:
+
+    *Header is needed in all APIs* 
+   **Authorizartion(Header)** :
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
+
+
+    1. POST url_of_auth_service/payment/
+
+
+    Request Body
+
+    ```
+        {
+            "doctorId": 1,
+            "price":1200,
+            "availabilityId" : 5
+        }
+
+    ```
+    As soon as booking is confirmed, the attribute 'is_available' of slot table is changed to false. As, this slot is now booked by client.  
+    
 
  # Complete Flow from register to booking a session with payment:
 
@@ -334,7 +632,6 @@ None
 }
 
 ```
-
 
 
 # Postman Documentation
