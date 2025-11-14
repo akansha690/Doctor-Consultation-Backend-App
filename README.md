@@ -122,6 +122,8 @@ Client (Frontend / Postman)
         Endpoint: POST /api/v1/user/
         Description: Register a new user with specified role
 
+        **Request Body**
+
         ```
             {
             "username": "Sakshi",
@@ -132,29 +134,33 @@ Client (Frontend / Postman)
 
         ```
 
-    Response body 
 
 
-```
-    {
-        "message": "User registered successfully",
-        "data": {
-            "id": 9,
-            "username": "Sakshi",
-            "email": "sakshi56@gmail.com",
-            "password": "$2b$10$oAb7XNjnTLl5wvJnHWOpBOsG1wtWbrZMx/MiGEXVGoSkjEAm2dHVe",
-            "role": "PATIENT",
-            "updatedAt": "2025-11-12T06:44:36.799Z",
-            "createdAt": "2025-11-12T06:44:36.799Z"
-        },
-        "success": true
-    }
+    **Response body** 
 
-```
+
+    ```
+        {
+            "message": "User registered successfully",
+            "data": {
+                "id": 9,
+                "username": "Sakshi",
+                "email": "sakshi56@gmail.com",
+                "password": "$2b$10$oAb7XNjnTLl5wvJnHWOpBOsG1wtWbrZMx/MiGEXVGoSkjEAm2dHVe",
+                "role": "PATIENT",
+                "updatedAt": "2025-11-12T06:44:36.799Z",
+                "createdAt": "2025-11-12T06:44:36.799Z"
+            },
+            "success": true
+        }
+
+    ```
 
   2. User Login
         Endpoint: POST /api/v1/user/login
         Description: Authenticate user and generate JWT token
+
+         **Request Body**
 
         ```
 
@@ -166,7 +172,7 @@ Client (Frontend / Postman)
 
         ```
 
-    Response 
+    **Response body** 
 
     ```
 
@@ -201,7 +207,7 @@ Client (Frontend / Postman)
     1. POST http://localhost:AUTH_SERVICE_PORT/api/v1/user/  ----->To Register a user
     2. POST http://localhost:AUTH_SERVICE_PORT/api/v1/user/login/  -----> To login a user
 
-    For below endpoints, client need to provide token received in headers like this
+    For below endpoints, client needs to provide the token received in headers like this
     
     **Authorizartion(Header)** :
     Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
@@ -234,6 +240,7 @@ Client (Frontend / Postman)
     
 
    *Header is needed in all APIs* 
+   
    **Authorizartion(Header)** :
     Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJzYWtzaGk1NkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNha3NoaSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzYyOTMwMjQ1LCJleHAiOjE3NjMwMTY2NDV9.gZZN4DOXna-mT9NmCKFMOMHC6gA9OP7EGpASPnt7EtA
 
