@@ -18,6 +18,7 @@ export class UserRepository extends BaseRepository<User>{
                 }
                 return record; 
             } catch (error) {
+                console.log(error);
                 throw new InternalServerError("Something went wrong")
             }
         }

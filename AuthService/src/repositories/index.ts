@@ -13,6 +13,7 @@ abstract class BaseRepository<T extends Model>{
             const record = await this.model.create(data);
             return record;
         } catch (error) {
+            console.log(error);
             throw new InternalServerError("Something went wrong")
         }
     }
@@ -24,6 +25,7 @@ abstract class BaseRepository<T extends Model>{
             }
             return record; 
         } catch (error) {
+            console.log(error);
             throw new InternalServerError("Something went wrong")
         }
     }
@@ -36,6 +38,7 @@ abstract class BaseRepository<T extends Model>{
             }
             return records; 
         } catch (error) {
+            console.log(error);
            throw new InternalServerError("Something went wrong")
         }
     }
@@ -51,6 +54,7 @@ abstract class BaseRepository<T extends Model>{
             }
             return; 
         } catch (error) {
+            console.log(error);
             throw new InternalServerError("Something went wrong")
         }
     }
@@ -64,7 +68,7 @@ abstract class BaseRepository<T extends Model>{
             await record.save();
             return record;
         } catch (error) {
-            
+            console.log(error);
             throw new InternalServerError("Something went wrong")
         }
     }
