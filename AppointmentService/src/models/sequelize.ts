@@ -7,5 +7,8 @@ export const sequelize = new Sequelize({
     username: dbConfig.DB_USER,
     password: dbConfig.DB_PASS,
     host: dbConfig.DB_HOST,
-    database:dbConfig.DB_NAME
+    database:dbConfig.DB_NAME,
+    dialectOptions: {
+        connectTimeout: 60000 // 60 seconds timeout
+    },
 })
