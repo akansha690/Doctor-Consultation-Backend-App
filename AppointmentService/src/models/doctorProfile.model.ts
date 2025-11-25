@@ -43,7 +43,7 @@ DoctorProfile.init(
             allowNull:false
         },
         experience:{
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull:false
         },
         createdAt:{
