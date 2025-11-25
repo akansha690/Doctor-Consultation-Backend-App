@@ -17,26 +17,9 @@ app.use(JWTMiddleware, HTTPAxiosRequest)
 
 sequelize.sync({ alter: true });
 
-// app.listen(serverConfig.PORT, ()=>{
-//     console.log(`Listening on port : ${serverConfig.PORT}`);
-// })
+app.listen(serverConfig.PORT, ()=>{
+    console.log(`Listening on port : ${serverConfig.PORT}`);
+})
 
 
-sequelize.authenticate()
-  .then(() => {
-    console.log("✅ Database connection successful!");
 
-    // Sync models after successful connection
-    return sequelize.sync({ alter: true });
-  })
-  .then(() => {
-    console.log("✅ All tables synced");
-
-    // Start server after DB is ready
-    app.listen(serverConfig.PORT, ()=>{
-         console.log(`Listening on port : ${serverConfig.PORT}`);
-    })
-  })
-  .catch(err => {
-    console.error("❌ Database connection failed:", err);
-  });
