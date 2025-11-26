@@ -2,7 +2,7 @@
 import express from 'express';
 import { serverConfig } from './config/server.config';
 import v1Router from './routers';
-// import { JWTMiddleware } from './middlewares/jwt.middleware';
+import { JWTMiddleware } from './middlewares/jwt.middleware';
 import { HTTPAxiosRequest } from './apiGateway/axios';
 
 const app =  express();
@@ -14,13 +14,13 @@ app.get('/', (req , res)=>{
 })
 
 
+
 app.use('/api/v1' , v1Router)
 
 
-// app.use(JWTMiddleware, HTTPAxiosRequest)
-app.use(HTTPAxiosRequest)
+app.use(JWTMiddleware, HTTPAxiosRequest)
 
-// sequelize.sync({ alter: true });
+// app.use(HTTPAxiosRequest)
 
 
 app.listen(serverConfig.PORT, '0.0.0.0', ()=>{
