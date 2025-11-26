@@ -2,7 +2,7 @@
 import express from 'express';
 import { serverConfig } from './config/server.config';
 import v1Router from './routers';
-import { JWTMiddleware } from './middlewares/jwt.middleware';
+// import { JWTMiddleware } from './middlewares/jwt.middleware';
 import { HTTPAxiosRequest } from './apiGateway/axios';
 
 const app =  express();
