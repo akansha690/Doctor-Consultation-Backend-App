@@ -9,6 +9,6 @@ app.use(express.json());
 
 app.use('/api/v1' , v1Router)
 
-app.listen(serverConfig.PORT, ()=>{
+app.listen(serverConfig.PORT, '0.0.0.0', ()=>{
     console.log(`Listening on port : ${serverConfig.PORT}`);
 })

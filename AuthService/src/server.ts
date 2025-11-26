@@ -17,7 +17,7 @@ app.use(JWTMiddleware, HTTPAxiosRequest)
 
 sequelize.sync({ alter: true });
 
-app.listen(serverConfig.PORT, ()=>{
+app.listen(serverConfig.PORT, '0.0.0.0', ()=>{
     console.log(`Listening on port : ${serverConfig.PORT}`);
 })
 

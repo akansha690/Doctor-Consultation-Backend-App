@@ -12,6 +12,6 @@ app.use('/api/v1' , v1Router)
 
 // app.use(JWTMiddleware, HTTPAxiosRequest)
 
-app.listen(serverConfig.PORT, ()=>{
+app.listen(serverConfig.PORT, '0.0.0.0', ()=>{
     console.log(`Listening on port : ${serverConfig.PORT}`);
 })
