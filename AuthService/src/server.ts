@@ -10,13 +10,15 @@ const app =  express();
 app.use(express.json());
 
 app.get('/', (req , res)=>{
-    res.send('Payment Service is up and running');
+    res.send('Auth Service is up and running');
 })
+
 
 app.use('/api/v1' , v1Router)
 
 
-app.use(JWTMiddleware, HTTPAxiosRequest)
+// app.use(JWTMiddleware, HTTPAxiosRequest)
+app.use(HTTPAxiosRequest)
 
 // sequelize.sync({ alter: true });
 
